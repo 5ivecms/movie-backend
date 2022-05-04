@@ -9,11 +9,18 @@ export class GenreService {
   constructor(@InjectModel(GenreModel) private readonly genreModel: ModelType<GenreModel>) {}
 
   public async bySlug(slug: string) {
-    return this.genreModel.findOne({ slug }).exec()
+    const genre = await this.genreModel.findOne({ slug }).exec()
+
+    if (!genre) {
+      throw new NotFoundException('Genre not found')
+    }
+
+    return genre
   }
 
   public async byId(_id: string) {
     const genre = await this.genreModel.findById(_id)
+
     if (!genre) {
       throw new NotFoundException('Genre not found')
     }

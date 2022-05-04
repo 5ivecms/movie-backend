@@ -10,7 +10,7 @@ export class FileController {
   @Post()
   @HttpCode(HttpStatus.OK)
   @Auth('admin')
-  @UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('file'))
   public async uploadFile(@UploadedFile() file: Express.Multer.File, @Query('folder') folder?: string) {
     return this.fileService.saveFiles([file], folder)
   }
